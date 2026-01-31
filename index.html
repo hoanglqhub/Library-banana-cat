@@ -236,7 +236,7 @@
                     Copy Script
                 </button>
                 <pre id="code1">repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
-getgenv().Key = ""
+getgenv().Key = "dán key vào đây"
     getgenv().Setting = {
         ["Team"] = "Pirate",
         ["Method Click"] = {["Click Gun"] = false ,["Click Melee"] = true,["Click Sword"] = false,["Click Fruit"] = false, ["LowHealth"] = 5000, ["Delay Click"] = 0.3},
@@ -245,7 +245,7 @@ getgenv().Key = ""
         ["Misc"] = {["AutoBuyRandomandStoreFruit"] = true,["AutoBuySurprise"] = true},
         ["SafeZone"] = {["Enable"] = true,["LowHealth"] = 4500,["MaxHealth"] = 8000,["Teleport Y"] = 2000},
         ["Method Use Skill"] = {["Use Random"] = true,["Use Number"] = false},
-        ["Use random skill if player target low health"] = {
+        ["Use random skill if player target low health"] = { --- suport only method use skill Number
             ["Enabled"] = true,
             ["Low Health"] = 4000,
         },
@@ -254,13 +254,22 @@ getgenv().Key = ""
         ["Aim Prediction"] = 0.5,
         ["Select Region"] = {["Enabled"] = false,["Region"] = {["Singapore"] = true,["United States"] = false,["Netherlands"] = false,["Germany"] =false,["India"] = false,["Australia"] = false}},
         ["Ignore Devil Fruit"] = {"Human-Human","Portal-Portal"}, 
-        ["Dodge Skill Player"] = true,
-        ["Spam Dash"] = false,
+        ["Dodge Skill Player"] = true, --- Beta per 50% can dodge 
+        ["Spam Dash"] = false, ---- risk can banned 1 day
         ["Equip Weapon"] = {
             ["Enabled"] = false,
-            ["Melee"] = { ["Enabled"] = false, ["Name Weapon"] = "" },
-            ["Sword"] = { ["Enabled"] = false, ["Name Weapon"] = "" },
-            ["Gun"] = { ["Enabled"] = false, ["Name Weapon"] = "" },
+            ["Melee"] = {
+                ["Enabled"] = false,
+                ["Name Weapon"] = "",
+            },
+            ["Sword"] = {
+                ["Enabled"] = false,
+                ["Name Weapon"] = "",
+            },
+            ["Gun"] = {
+                ["Enabled"] = false,
+                ["Name Weapon"] = "",
+            },
         },
         ["Weapons"] = {
             ["Melee"] = {
@@ -447,3 +456,4 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitin
 </body>
 
 </html>
+
