@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banana Cat Hub | Premium Scripts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --primary-hover: #38bdf8;
+            --bg-dark: #020617;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --discord: #5865F2;
+            --tiktok-bg: #000000;
+            --success: #10b981;
+        }
+
+        * { box-sizing: border-box; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #020617 70%);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 15px;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* --- Header --- */
+        .header-container { text-align: center; margin-bottom: 30px; }
+        h2 {
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+        }
+        .subtitle { color: var(--text-muted); font-size: 14px; margin-top: 8px; }
+
+        /* --- Navigation --- */
+        .nav-wrapper {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 5px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        button.tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button.tab-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+        button.active-btn {
+            background: var(--primary) !important;
+            color: #0f172a !important;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+        }
+
+        /* --- Main Content --- */
+        .content-box {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
+        .show { display: block; }
+
+        /* --- Script Area --- */
+        .script-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .script-badge {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .script-badge::before { content: ""; width: 6px; height: 6px; background: var(--success); border-radius: 50%; }
+
+        .code-wrapper {
+            position: relative;
+            background: #09090b;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+
+        pre {
+            margin: 0;
+            padding: 20px;
+            white-space: pre;
+            overflow-x: auto;
+            color: #a5f3fc;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        pre::-webkit-scrollbar { width: 8px; height: 8px; }
+        pre::-webkit-scrollbar-track { background: #09090b; }
+        pre::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+        .copy-btn {
+            position: absolute; top: 10px; right: 10px;
+            background: rgba(255,255,255,0.1); color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 12px; border-radius: 6px; cursor: pointer;
+            font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px;
+            backdrop-filter: blur(4px);
+        }
+        .copy-btn:hover { background: rgba(255,255,255,0.2); }
+        .copy-success { background: var(--success) !important; color: #020617 !important; border-color: var(--success) !important; }
+
+        /* --- Social Buttons --- */
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            transition: transform 0.2s, filter 0.2s;
+        }
+        
+        .btn-discord { background-color: var(--discord); }
+        
+        /* Hiệu ứng màu TikTok */
+        .btn-tiktok { 
+            background: linear-gradient(45deg, #000000 0%, #252525 100%);
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Tạo viền sáng TikTok */
+        .btn-tiktok:hover {
+            box-shadow: -2px -2px 10px rgba(0, 242, 234, 0.3), 2px 2px 10px rgba(255, 0, 80, 0.3);
+        }
+
+        .social-btn:hover { transform: translateY(-3px); filter: brightness(1.2); }
+
+        .info-list { list-style: none; padding: 0; margin-top: 20px; }
+        .info-list li {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        .info-list li span:last-child { color: var(--primary); font-weight: 600; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @media (max-width: 600px) {
+            .social-grid { grid-template-columns: 1fr; }
+            h2 { font-size: 22px; }
+            .content-box { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <h2>BANANA CAT HUB</h2>
+        <div class="subtitle">Official Script Repository | Version 3.0</div>
+    </div>
+
+    <div class="nav-wrapper">
+        <button class="tab-btn active-btn" onclick="showTab(event, 'tab1')">Auto Bounty</button>
+        <button class="tab-btn" onclick="showTab(event, 'tab2')">Kaitun Farm</button>
+        <button class="tab-btn" onclick="showTab(event, 'tab3')">Main Hub</button>
+        <button class="tab-btn" onclick="showTab(event, 'tab4')">Thông Tin</button>
+    </div>
+
+    <div class="content-box">
+        
+        <div id="tab1" class="tab-content show">
+            <div class="script-header">
+                <div class="script-badge">Undetected</div>
+                <div style="font-size: 13px; color: var(--text-muted);">Status: bình thường</div>
+            </div>
+            <div class="code-wrapper">
+                <button class="copy-btn" onclick="copyCode(this, 'code1')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy Script
+                </button>
+                <pre id="code1">repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+getgenv().Key = ""
+    getgenv().Setting = {
+        ["Team"] = "Pirate",
+        ["Method Click"] = {["Click Gun"] = false ,["Click Melee"] = true,["Click Sword"] = false,["Click Fruit"] = false, ["LowHealth"] = 5000, ["Delay Click"] = 0.3},
+        ["Race V4"] = {["Enable"] = true},
+        ["Webhook"] = {["Enabled"] = false,["Url Webhook"] = ""},
+        ["Misc"] = {["AutoBuyRandomandStoreFruit"] = true,["AutoBuySurprise"] = true},
+        ["SafeZone"] = {["Enable"] = true,["LowHealth"] = 4500,["MaxHealth"] = 8000,["Teleport Y"] = 2000},
+        ["Method Use Skill"] = {["Use Random"] = true,["Use Number"] = false},
+        ["Use random skill if player target low health"] = {
+            ["Enabled"] = true,
+            ["Low Health"] = 4000,
+        },
+        ["Use Portal Teleport"] = false,
+        ["Target Time"] = 20,
+        ["Aim Prediction"] = 0.5,
+        ["Select Region"] = {["Enabled"] = false,["Region"] = {["Singapore"] = true,["United States"] = false,["Netherlands"] = false,["Germany"] =false,["India"] = false,["Australia"] = false}},
+        ["Ignore Devil Fruit"] = {"Human-Human","Portal-Portal"}, 
+        ["Dodge Skill Player"] = true,
+        ["Spam Dash"] = false,
+        ["Equip Weapon"] = {
+            ["Enabled"] = false,
+            ["Melee"] = { ["Enabled"] = false, ["Name Weapon"] = "" },
+            ["Sword"] = { ["Enabled"] = false, ["Name Weapon"] = "" },
+            ["Gun"] = { ["Enabled"] = false, ["Name Weapon"] = "" },
+        },
+        ["Weapons"] = {
+            ["Melee"] = {
+                ["Enable"] = true,
+                ["Skills"] = {
+                    ["Z"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 2},
+                    ["X"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 3},
+                    ["C"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 5},
+                },
+            },
+            ["Blox Fruit"] = {
+                ["Enable"] = false,
+                ["Skills"] = {
+                    ["Z"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 4},
+                    ["X"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 6},
+                    ["C"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 9},
+                    ["V"] = {["Enable"] = false,["HoldTime"] = 0.3,["Number"] = 0},
+                    ["F"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 8},
+                },
+            },
+            ["Gun"] = {
+                ["Enable"] = true,
+                ["Skills"] = {
+                    ["Z"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 1},
+                    ["X"] = {["Enable"] = true,["HoldTime"] = 0.3,["Number"] = 7},
+                },
+            },
+            ["Sword"] = {
+                ["Enable"] = false,
+                ["Skills"] = {
+                    ["Z"] = {["Enable"] = true,["HoldTime"] = 1.5,["Number"] = 0},
+                    ["X"] = {["Enable"] = true,["HoldTime"] = 0.5,["Number"] = 0},
+                },
+            },
+        }
+    }
+loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/refs/heads/main/BananaCat-BountyEz.lua"))()</pre>
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-content">
+            <div class="script-header">
+                <div class="script-badge">Auto Farm OP</div>
+                <div style="font-size: 13px; color: var(--text-muted);">Status: bình thường</div>
+            </div>
+            <div class="code-wrapper">
+                <button class="copy-btn" onclick="copyCode(this, 'code2')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy Script
+                </button>
+                <pre id="code2">repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+getgenv().Key = ""
+    getgenv().SettingFarm ={
+        ["Hide UI"] = false,
+        ["Reset Teleport"] = {
+            ["Enabled"] = false,
+            ["Delay Reset"] = 3,
+            ["Item Dont Reset"] = {
+                ["Fruit"] = {
+                    ["Enabled"] = true,
+                    ["All Fruit"] = true, 
+                    ["Select Fruit"] = { ["Enabled"] = false, ["Fruit"] = {} },
+                },
+            },
+        },
+        ["White Screen"] = false,
+        ["Lock Fps"] = { ["Enabled"] = false, ["FPS"] = 20 },
+        ["Get Items"] = {
+            ["Saber"] = true,
+            ["Godhuman"] =  true,
+            ["Skull Guitar"] = true,
+            ["Mirror Fractal"] = true,
+            ["Cursed Dual Katana"] = true,
+            ["Upgrade Race V2-V3"] = true,
+            ["Auto Pull Lever"] = true,
+            ["Shark Anchor"] = true,
+        },
+        ["Get Rare Items"] = { 
+            ["Rengoku"] = false, 
+            ["Dragon Trident"] = false, 
+            ["Pole (1st Form)"] = false, 
+            ["Gravity Blade"]  = false 
+        },
+        ["Farm Fragments"] = { ["Enabled"]  = false, ["Fragment"] = 50000 },
+        ["Auto Chat"] = { ["Enabled"] = false, ["Text"] = "" },
+        ["Auto Summon Rip Indra"] = true,
+        ["Select Hop"] = {
+            ["Hop Server If Have Player Near"] = false, 
+            ["Hop Find Rip Indra Get Valkyrie Helm or Get Tushita"] = true, 
+            ["Hop Find Dough King Get Mirror Fractal"] = false,
+            ["Hop Find Raids Castle [CDK]"] = true,
+            ["Hop Find Cake Queen [CDK]"] = true,
+            ["Hop Find Soul Reaper [CDK]"] = true,
+            ["Hop Find Darkbeard [SG]"] = true,
+            ["Hop Find Mirage [ Pull Lever ]"] = false,
+        },
+        ["Farm Mastery"] = { ["Melee"] = false, ["Sword"] = false },
+        ["Buy Haki"] = { 
+            ["Enhancement"] = false, 
+            ["Skyjump"] = true, 
+            ["Flash Step"] = true, 
+            ["Observation"] = true 
+        },
+        ["Sniper Fruit Shop"] = {
+            ["Enabled"] = true,
+            ["Fruit"] = {"Leopard-Leopard","Kitsune-Kitsune","Dragon-Dragon","Yeti-Yeti","Gas-Gas"},
+        },
+        ["Lock Fruit"] = {},
+        ["Webhook"] = { ["Enabled"] = false, ["WebhookUrl"] = "" }
+    }
+loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaCat-kaitunBF.lua"))()</pre>
+            </div>
+        </div>
+
+        <div id="tab3" class="tab-content">
+            <div class="script-header">
+                <div class="script-badge">Key System</div>
+                <div style="font-size: 13px; color: var(--text-muted);">Status: bình thường</div>
+            </div>
+            <div class="code-wrapper">
+                <button class="copy-btn" onclick="copyCode(this, 'code3')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy Script
+                </button>
+                <pre id="code3">repeat wait() until game:IsLoaded() and game.Players.LocalPlayer 
+getgenv().Key = "Input Key" 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaHub.lua"))()</pre>
+            </div>
+        </div>
+
+        <div id="tab4" class="tab-content">
+            <h3 style="color: #fff; margin-top: 0; font-size: 20px;">Thông Tin Hỗ Trợ</h3>
+            <p style="color: var(--text-muted); line-height: 1.6;">
+                Cảm ơn bạn đã sử dụng. Tham gia cộng đồng discord nhé!
+            </p>
+
+            <ul class="info-list">
+                <li><span>Phiên bản</span><span>v3.0 fremium</span></li>
+                <li><span>Tác giả</span><span>Hoàng GM</span></li>
+                <li><span>Trạng thái</span><span style="color: var(--success);">Đang hoạt động</span></li>
+            </ul>
+
+            <div class="social-grid">
+                <a href="https://discord.gg/QezxKYcw4k" target="_blank" class="social-btn btn-discord">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.772-.6083 1.1588a18.2915 18.2915 0 00-7.6511 0 11.898 11.898 0 00-.6198-1.1588.0775.0775 0 00-.0785-.0376 19.7936 19.7936 0 00-4.8852 1.5151.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561 19.968 19.968 0 005.9937 3.0333.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057 13.111 13.111 0 01-1.872-1.1565.0773.0773 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873 1.1565.0786.0786 0 00-.0407.1069c.36.6982.7713 1.3628 1.225 1.9932a.076.076 0 00.0842.0286 19.998 19.998 0 006.0028-3.0338.077.077 0 00.0322-.054c.4917-5.1437-1.1727-9.6875-5.2877-13.6644a.061.061 0 00-.032-.0277zM8.52 14.9753c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9554 2.4189-2.1569 2.4189zm7.0052 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/></svg>
+                    Tham Gia Discord
+                </a>
+                <a href="https://tiktok.com/@hoanglq_911" target="_blank" class="social-btn btn-tiktok">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                    Follow TikTok
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showTab(event, tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('show'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active-btn'));
+            document.getElementById(tabId).classList.add('show');
+            event.currentTarget.classList.add('active-btn');
+        }
+
+        function copyCode(btn, elementId) {
+            const code = document.getElementById(elementId).innerText;
+            const textarea = document.createElement("textarea");
+            textarea.value = code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Đã Copy!`;
+            btn.classList.add('copy-success');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('copy-success');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
